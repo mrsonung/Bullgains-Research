@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Poppins', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+  
+  * {
+    @apply border-gray-200;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-gray-900;
+  }
+  
+  h1 {
+    @apply text-4xl lg:text-5xl xl:text-6xl;
+  }
+  
+  h2 {
+    @apply text-3xl lg:text-4xl xl:text-5xl;
+  }
+  
+  h3 {
+    @apply text-2xl lg:text-3xl;
+  }
+  
+  h4 {
+    @apply text-xl lg:text-2xl;
+  }
+  
+  h5 {
+    @apply text-lg lg:text-xl;
+  }
+  
+  h6 {
+    @apply text-base lg:text-lg;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-primary {
+    @apply btn bg-bullgains-blue text-white hover:bg-bullgains-blue-light focus:ring-bullgains-blue shadow-bullgains;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-white text-bullgains-blue border border-bullgains-blue hover:bg-bullgains-blue hover:text-white focus:ring-bullgains-blue;
+  }
+  
+  .btn-accent {
+    @apply btn bg-bullgains-yellow text-bullgains-blue hover:bg-bullgains-yellow-light focus:ring-bullgains-yellow shadow-yellow font-semibold;
+  }
+  
+  .btn-ghost {
+    @apply btn text-gray-600 hover:text-bullgains-blue hover:bg-gray-100 focus:ring-gray-300;
+  }
+  
+  .btn-sm {
+    @apply px-4 py-2 text-xs;
+  }
+  
+  .btn-lg {
+    @apply px-8 py-4 text-base;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-bullgains border border-gray-100 overflow-hidden;
+  }
+  
+  .card-hover {
+    @apply card transition-transform duration-700 ease-out hover:shadow-bullgains-lg hover:-translate-y-1 hover:scale-[1.015];
+  }
+  
+  .input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bullgains-blue focus:border-transparent transition-all duration-200 bg-white;
+  }
+  
+  .textarea {
+    @apply input resize-none;
+  }
+  
+  .label {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply badge bg-bullgains-blue text-white;
+  }
+  
+  .badge-secondary {
+    @apply badge bg-gray-100 text-gray-800;
+  }
+  
+  .badge-accent {
+    @apply badge bg-bullgains-yellow text-bullgains-blue;
+  }
+  
+  .badge-success {
+    @apply badge bg-green-100 text-green-800;
+  }
+  
+  .badge-warning {
+    @apply badge bg-yellow-100 text-yellow-800;
+  }
+  
+  .badge-error {
+    @apply badge bg-red-100 text-red-800;
+  }
+  
+  .section-padding {
+    @apply py-16 lg:py-24;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-bullgains-blue to-bullgains-blue-light bg-clip-text text-transparent;
+  }
+  
+  .gradient-bg {
+    @apply bg-gradient-to-br from-bullgains-blue via-bullgains-blue-light to-bullgains-yellow;
+  }
+  
+  .hero-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F4C81' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  
+  .loading-spinner {
+    @apply animate-spin rounded-full border-2 border-gray-300 border-t-bullgains-blue;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .fade-in-down {
+    animation: fadeInDown 0.6s ease-out;
+  }
+  
+  .slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+  }
+  
+  .slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .glass {
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+  
+  .glass-dark {
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(15, 76, 129, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Selection styles */
+::selection {
+  background-color: #FFCB05;
+  color: #0F4C81;
+}
+
+::-moz-selection {
+  background-color: #FFCB05;
+  color: #0F4C81;
+}
+
+/* Focus styles */
+.focus-visible {
+  @apply outline-none ring-2 ring-bullgains-blue ring-offset-2;
+}
+
+/* Animation delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+.delay-400 {
+  animation-delay: 400ms;
+}
+
+.delay-500 {
+  animation-delay: 500ms;
+}
