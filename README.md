@@ -414,8 +414,9 @@ For support and questions:
 
 ---
 
-**Built with ❤️ by the Bullgains Research Team**
+**Built by the Bullgains Research Team**
 
 *Empowering investors with expert market insights and professional trading guidance.*
-#   B u l l g a i n s - R e s e a r c h  
+#   B u l l g a i n s - R e s e a r c h 
+ 
  
