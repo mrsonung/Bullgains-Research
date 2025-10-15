@@ -133,7 +133,7 @@ const Disclaimer = () => {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Regulatory Compliance</h2>
             <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
               <p>
-                Bullgains Research is a SEBI-registered Research Analyst (Registration Number: INH000008093). 
+                Bullgains Research is a SEBI-registered Research Analyst (Registration Number: INH000022190). 
                 However, this registration does not guarantee the accuracy or reliability of our research.
               </p>
               <p>

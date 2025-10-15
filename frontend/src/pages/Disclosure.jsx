@@ -173,18 +173,18 @@ const Disclosure = () => {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Regulatory Disclosures</h2>
             <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
               <p>
-                Bullgains Research is registered with SEBI as a Research Analyst (Registration Number: INH000008093). 
+                Bullgains Research is registered with SEBI as a Research Analyst (Registration Number: INH000022190). 
                 Our research activities are conducted in accordance with SEBI Research Analyst Regulations, 2014.
               </p>
               <p>
                 Key regulatory disclosures include:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>SEBI Registration Number: INH000008093</li>
-                <li>BSE Membership Number: 5422</li>
-                <li>Corporate Identification Number: U72900MH2020PTC346236</li>
+                <li>SEBI Registration Number: INH000022190</li>
+                <li>BSE Membership Number: 6660</li>
+                {/* <li>Corporate Identification Number: U72900MH2020PTC346236</li> */}
                 <li>GSTIN: 10ABEFB4164D1Z5</li>
-                <li>Partnership Deed Date: 05 Feb 2025</li>
+                {/* <li>Partnership Deed Date: 05 Feb 2025</li> */}
               </ul>
             </div>
           </section>

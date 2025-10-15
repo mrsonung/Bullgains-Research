@@ -44,9 +44,32 @@ const Footer = () => {
                 <Phone className="w-5 h-5 text-blue-400 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-white">Contact</p>
-                  <p>+91 7903908955</p>
+                  <p>+91 9288108955</p>
                 </div>
-            </div>
+              </div>
+              <div className="mt-4">
+                <p className="font-medium text-white">Follow us</p>
+                <div className="flex flex-wrap items-center gap-3 mt-2 text-sm">
+
+                <a href="https://instagram.com/bullgainsresearch" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white flex items-center">
+                    <ExternalLink className="w-4 h-4 mr-1" /> Instagram
+                  </a> 
+
+                  <a href="https://threads.com/bullgainsresearch" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white flex items-center">
+                    <ExternalLink className="w-4 h-4 mr-1" /> Threads
+                  </a>
+                  <a href="https://twitter.com/BullgainsR" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white flex items-center">
+                    <ExternalLink className="w-4 h-4 mr-1" /> Twitter
+                  </a>
+                  <a href="https://www.linkedin.com/in/bullgains-research-44588438a/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white flex items-center">
+                    <ExternalLink className="w-4 h-4 mr-1" /> LinkedIn
+                  </a>
+                  
+                  {/* <a href="https://youtube.com/bullgains" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white flex items-center">
+                    <ExternalLink className="w-4 h-4 mr-1" /> YouTube
+                  </a> */}
+                </div>
+              </div>
             <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-400 flex-shrink-0" />
                 <div>
@@ -61,11 +84,11 @@ const Footer = () => {
           <div>
             <h4 className="text-white text-lg font-semibold mb-4">Registration Details</h4>
             <div className="space-y-2 text-sm">
-              <p><span className="font-medium">BSE Membership Number:</span> 5422</p>
-              <p><span className="font-medium">SEBI Research Analysts Registration Number:</span> INH000008093</p>
-              <p><span className="font-medium">Corporate Identification Number:</span> U72900MH2020PTC346236</p>
+              <p><span className="font-medium">BSE Membership Number:</span> 6660</p>
+              <p><span className="font-medium">SEBI Research Analysts Registration Number:</span> INH000022190</p>
+              {/* <p><span className="font-medium">Corporate Identification Number:</span> U72900MH2020PTC346236</p> */}
               <p><span className="font-medium">GSTIN:</span> 10ABEFB4164D1Z5</p>
-              <p><span className="font-medium">Partnership Deed Date:</span> 05 Feb 2025</p>
+              {/* <p><span className="font-medium">Partnership Deed Date:</span> 05 Feb 2025</p> */}
               <p><span className="font-medium">Official Website:</span> www.bullgains.in</p>
             </div>
           </div>

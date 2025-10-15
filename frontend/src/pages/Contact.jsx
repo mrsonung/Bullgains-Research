@@ -137,18 +137,18 @@ const Contact = () => {
             <div className="text-center">
               <Building className="w-8 h-8 mx-auto mb-2" />
               <p className="text-sm text-blue-200">BSE Membership Number</p>
-              <p className="font-semibold">5422</p>
+              <p className="font-semibold">6660</p>
             </div>
             <div className="text-center">
               <Shield className="w-8 h-8 mx-auto mb-2" />
               <p className="text-sm text-blue-200">SEBI Research Analysts Registration</p>
-              <p className="font-semibold">INH000008093</p>
+              <p className="font-semibold">INH000022190</p>
             </div>
-            <div className="text-center">
+            {/* <div className="text-center">
               <FileText className="w-8 h-8 mx-auto mb-2" />
-              <p className="text-sm text-blue-200">Corporate Identification Number</p>
-              <p className="font-semibold">U72900MH2020PTC346236</p>
-            </div>
+              {/* <p className="text-sm text-blue-200">Corporate Identification Number</p>
+              <p className="font-semibold">U72900MH2020PTC346236</p> 
+            </div> */}
             <div className="text-center">
               <Globe className="w-8 h-8 mx-auto mb-2" />
               <p className="text-sm text-blue-200">GSTIN</p>
@@ -164,7 +164,7 @@ const Contact = () => {
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Additional Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
+            {/* <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Partnership Details</h3>
               <div className="space-y-2 text-gray-600">
                 <p><span className="font-medium">Partnership Deed Date:</span> 05 Feb 2025</p>
@@ -172,7 +172,7 @@ const Contact = () => {
                 <p><span className="font-medium">CEO & Founder:</span> Ashish Kumar Roushan</p>
                 <p><span className="font-medium">Founder:</span> Navlesh Kumar Happy</p>
               </div>
-            </div>
+            </div> */}
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Service Information</h3>
               <div className="space-y-2 text-gray-600">
