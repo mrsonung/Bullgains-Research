@@ -14,7 +14,7 @@ export const SocketProvider = ({ children }) => {
     // Determine socket base URL: prefer VITE_SOCKET_URL; else derive from VITE_API_URL by stripping trailing /api
     const apiUrl = import.meta.env.VITE_API_URL;
     const derivedSocketUrl = apiUrl && apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
-    const socketUrl = import.meta.env.VITE_SOCKET_URL || derivedSocketUrl || 'http://localhost:5000';
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || derivedSocketUrl || 'https://bullgains-research.onrender.com';
 
     // Initialize socket connection
     const newSocket = io(socketUrl, {
