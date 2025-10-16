@@ -37,6 +37,7 @@ import Register from './pages/auth/Register'
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
+import PaymentDetails from './pages/PaymentDetails'
 
 // Protected Route Component
 import ProtectedRoute from './components/ProtectedRoute'
@@ -78,6 +79,7 @@ function App() {
                   <Route path="/investor-charter" element={<InvestorCharter />} />
                   <Route path="/odr" element={<ODR />} />
                   <Route path="/odr-circular" element={<ODRCircular />} />
+                  <Route path="/payment-details" element={<PaymentDetails />} />
                   
                   {/* Protected Routes */}
                   <Route path="/dashboard" element={
