@@ -68,8 +68,9 @@ if (config.ENABLE_SEED === 'true') {
 
 // ✅ Default route for Render health check
 app.get('/', (req, res) => {
-  res.send("✅ BullGains backend is running successfully!");
+  res.send('Welcome to Bullgains Backend 🚀');
 });
+
 
 // ✅ Socket.IO setup for real-time analytics
 io.on('connection', (socket) => {
