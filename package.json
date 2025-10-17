@@ -9,7 +9,7 @@
     "client": "cd frontend && npm run dev",
     "build": "cd frontend && npm run build",
     "install-all": "npm install && cd server && npm install && cd ../frontend && npm install",
-    "start": "node index.js"
+    "start": "npm start"
   },
   "keywords": ["bullgains", "research", "trading", "sebi", "react", "node"],
   "author": "Bullgains Research",
