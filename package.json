@@ -2,14 +2,14 @@
   "name": "bullgains-research",
   "version": "1.0.0",
   "description": "SEBI-registered research-based trading company web application",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && npm run dev",
     "client": "cd frontend && npm run dev",
     "build": "cd frontend && npm run build",
     "install-all": "npm install && cd server && npm install && cd ../frontend && npm install",
-    "start": "cd server && npm start"
+    "start": "node index.js"
   },
   "keywords": ["bullgains", "research", "trading", "sebi", "react", "node"],
   "author": "Bullgains Research",
