@@ -67,10 +67,10 @@ if (config.ENABLE_SEED === 'true') {
 }
 
 // ✅ Default route for Render health check
-app.get('/', (req, res) => {
-  res.send('Welcome to Bullgains Backend 🚀');
+app.use(express.static(path.join(__dirname, "frontend", "dist")));
+app.get('/', (_, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
 });
-
 
 // ✅ Socket.IO setup for real-time analytics
 io.on('connection', (socket) => {
