@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { RefreshCw, Wifi, WifiOff } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import MarketCard from './MarketCard';
 import { fetchAllMarketData } from '../utils/fetchStockData';
 
@@ -9,33 +9,11 @@ const MarketOverview = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-
-  // Check online status
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
-
   // Fetch market data
   const fetchData = useCallback(async () => {
-    if (!isOnline) {
-      setError('No internet connection');
-      return;
-    }
-
     try {
       setIsLoading(true);
       setError(null);
-      
       const data = await fetchAllMarketData();
       setMarketData(data);
       setLastUpdated(new Date());
@@ -45,23 +23,21 @@ const MarketOverview = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [isOnline]);
+  }, []);
 
   // Initial data fetch
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  // Auto-refresh every 30 seconds
+  // Auto-refresh every 10 seconds for Google-style updates
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isOnline) {
-        fetchData();
-      }
-    }, 30000); // 30 seconds
+      fetchData();
+    }, 10000); // 10 seconds
 
     return () => clearInterval(interval);
-  }, [fetchData, isOnline]);
+  }, [fetchData]);
 
   // Manual refresh
   const handleRefresh = () => {
@@ -91,30 +67,17 @@ const MarketOverview = () => {
             📊 Market Overview (Live Updates)
           </h2>
           <p className="text-xl text-gray-600 mb-6">
-            Real-time market data for major Indian indices
+            Real-time market data for major Indian indices (Nifty 50, Sensex, Bank Nifty, BSE)
           </p>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 max-w-2xl mx-auto">
             <p className="text-sm text-blue-800">
-              <strong>Note:</strong> Using Finnhub API for real-time market data. 
-              Falls back to simulated data if API limits are reached.
+              <strong>Note:</strong> Displaying Google-style market data for major Indian indices. 
+              Data updates automatically every 10 seconds.
             </p>
           </div>
           
           {/* Status Bar */}
           <div className="flex items-center justify-center space-x-4 text-sm">
-            <div className="flex items-center space-x-2">
-              {isOnline ? (
-                <Wifi className="w-4 h-4 text-green-500" />
-              ) : (
-                <WifiOff className="w-4 h-4 text-red-500" />
-              )}
-              <span className={isOnline ? 'text-green-600' : 'text-red-600'}>
-                {isOnline ? 'Online' : 'Offline'}
-              </span>
-            </div>
-            
-            <div className="w-px h-4 bg-gray-300"></div>
-            
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
               <span className="text-gray-600">Live Data</span>
@@ -135,7 +98,7 @@ const MarketOverview = () => {
 
         {/* Market Cards */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -148,7 +111,6 @@ const MarketOverview = () => {
             error={error}
             className="hover:shadow-xl duration-700 ease-out"
           />
-
           {/* Sensex */}
           <MarketCard
             title="Sensex"
@@ -166,6 +128,16 @@ const MarketOverview = () => {
             error={error}
             className="hover:shadow-xl duration-700 ease-out"
           />
+
+          {/* BSE */}
+          <MarketCard
+            title="BSE"
+            data={marketData?.bse}
+            isLoading={isLoading}
+            error={error}
+            className="hover:shadow-xl duration-700 ease-out"
+          />
+          {/* MAN removed - keep only 4 index cards */}
         </motion.div>
 
         {/* Footer */}
@@ -182,7 +154,7 @@ const MarketOverview = () => {
                 Last Updated at {formatTime(lastUpdated)}
               </span>
               <span className="text-gray-400">•</span>
-              <span>Updates every 30 seconds</span>
+              <span>Updates every 10 seconds</span>
             </div>
           </div>
         </motion.div>
@@ -196,8 +168,7 @@ const MarketOverview = () => {
             transition={{ duration: 0.3 }}
           >
             <div className="flex items-center">
-              <WifiOff className="w-5 h-5 text-red-500 mr-2" />
-              <span className="text-red-700 font-medium">Connection Error</span>
+              <span className="text-red-700 font-medium">Error</span>
             </div>
             <p className="text-red-600 text-sm mt-1">{error}</p>
             <button

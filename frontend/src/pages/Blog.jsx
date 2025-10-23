@@ -10,16 +10,11 @@ const Blog = () => {
   useEffect(() => {
     (async () => {
       try {
-        console.log('Fetching blog posts...');
         const response = await blogAPI.getBlogs();
-        console.log('Blog API response:', response);
         setPosts(response.data);
       } catch (e) {
         console.error('Error loading blog posts:', e);
-        console.error('Error details:', e.response?.data || e.message);
-        
-        // Fallback to sample data if API fails
-        console.log('Using fallback sample data...');
+        // Fallback sample data
         const samplePosts = [
           {
             _id: 'sample-1',
@@ -52,7 +47,7 @@ const Blog = () => {
             slug: 'research-report-technology-sector-outlook',
             excerpt: 'Detailed research report on the technology sector and future growth prospects.',
             category: 'research-reports',
-            featuredImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=400&fit=crop',
+            featuredImage: 'https://plus.unsplash.com/premium_photo-1664298488678-707a87ede1e1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070',
             publishedAt: new Date(Date.now() - 172800000).toISOString(),
             readTime: 12,
             views: 203,
@@ -60,38 +55,38 @@ const Blog = () => {
           }
         ];
         setPosts(samplePosts);
-        setError(null);
       } finally {
         setLoading(false);
       }
     })();
   }, []);
 
+  // 🔹 Brand-aligned category colors
   const getCategoryColor = (category) => {
     const colors = {
-      'market-analysis': 'bg-blue-100 text-blue-800',
-      'research-reports': 'bg-green-100 text-green-800',
-      'trading-tips': 'bg-purple-100 text-purple-800',
-      'news-updates': 'bg-orange-100 text-orange-800',
-      'educational': 'bg-pink-100 text-pink-800',
+      'market-analysis': 'bg-[#0D4C3A]/10 text-[#0D4C3A] border-[#0D4C3A]/20',
+      'research-reports': 'bg-[#7ED957]/10 text-[#7ED957] border-[#7ED957]/20',
+      'trading-tips': 'bg-[#FFD700]/10 text-[#B8860B] border-[#FFD700]/20',
+      'news-updates': 'bg-[#FFA500]/10 text-[#CC6600] border-[#FFA500]/20',
+      'educational': 'bg-[#4B5563]/10 text-[#4B5563] border-[#4B5563]/20',
     };
-    return colors[category] || 'bg-gray-100 text-gray-800';
+    return colors[category] || 'bg-gray-100 text-gray-800 border-gray-200';
   };
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'long',
+      month: 'short',
       day: 'numeric'
     });
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen py-20 flex items-center justify-center">
+      <div className="min-h-screen py-20 flex items-center justify-center bg-gradient-to-b from-[#F8F9FA] to-white">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading blog posts...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#0D4C3A] mx-auto mb-3"></div>
+          <p className="text-gray-600 font-medium">Loading market insights...</p>
         </div>
       </div>
     );
@@ -99,16 +94,16 @@ const Blog = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen py-20 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Oops! Something went wrong</h2>
-          <p className="text-gray-600 mb-4">{error}</p>
+      <div className="min-h-screen py-20 flex items-center justify-center bg-[#F8F9FA]">
+        <div className="text-center max-w-md">
+          <div className="text-[#0D4C3A] text-5xl mb-4">📈</div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Research Temporarily Unavailable</h2>
+          <p className="text-gray-600 mb-6">We’re refining our latest analysis. Please try again shortly.</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-5 py-2.5 bg-[#0D4C3A] text-white rounded-lg hover:bg-[#1A6A50] transition-colors text-sm font-medium"
           >
-            Try Again
+            Retry
           </button>
         </div>
       </div>
@@ -116,27 +111,22 @@ const Blog = () => {
   }
 
   return (
-    <div className="min-h-screen py-20 bg-gray-50">
+    <div className="min-h-screen py-20 bg-gradient-to-b from-[#F8F9FA] to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">Market Insights & Research</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Stay informed with our latest market analysis, trading strategies, and investment insights from our expert research team
+        <div className="text-center mb-20">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-5 tracking-tight">
+            Market Insights & Research
+          </h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Expert analysis, actionable strategies, and forward-looking research to empower your investment decisions.
           </p>
-          {posts.length > 0 && posts[0]._id.startsWith('sample-') && (
-            <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4 max-w-2xl mx-auto">
-              <p className="text-sm text-yellow-800">
-                <strong>Note:</strong> Showing sample content. API connection may be temporarily unavailable.
-              </p>
-            </div>
-          )}
         </div>
 
         {/* Featured Post */}
         {posts.length > 0 && posts[0].isFeatured && (
-          <div className="mb-16">
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="mb-20">
+            <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-[#0D4C3A]/10 hover:shadow-2xl transition-shadow duration-300">
               <div className="md:flex">
                 <div className="md:w-1/2">
                   <img 
@@ -145,24 +135,33 @@ const Blog = () => {
                     className="w-full h-64 md:h-full object-cover" 
                   />
                 </div>
-                <div className="md:w-1/2 p-8">
+                <div className="md:w-1/2 p-10 flex flex-col justify-center">
                   <div className="flex items-center mb-4">
-                    <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(posts[0].category)}`}>
-                      {posts[0].category.replace('-', ' ').toUpperCase()}
+                    <span className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold border ${getCategoryColor(posts[0].category)}`}>
+                      {posts[0].category.replace(/-/g, ' ').toUpperCase()}
                     </span>
-                    <span className="ml-3 text-sm text-gray-500">Featured</span>
+                    <span className="ml-3 text-xs text-[#FFD700] font-bold">FEATURED</span>
                   </div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">{posts[0].title}</h2>
-                  <p className="text-gray-600 mb-6 text-lg">{posts[0].excerpt}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Calendar className="w-4 h-4 mr-2" />
-                      {formatDate(posts[0].publishedAt)}
-                      <Clock className="w-4 h-4 ml-4 mr-2" />
-                      {posts[0].readTime} min read
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">{posts[0].title}</h2>
+                  <p className="text-gray-600 mb-6">{posts[0].excerpt}</p>
+                  <div className="flex items-center justify-between mt-auto">
+                    <div className="flex items-center text-sm text-gray-500 space-x-4">
+                      <div className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-1.5" />
+                        {formatDate(posts[0].publishedAt)}
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 mr-1.5" />
+                        {posts[0].readTime} min
+                      </div>
+                      <div className="flex items-center">
+                        <Eye className="w-4 h-4 mr-1.5" />
+                        {posts[0].views}
+                      </div>
                     </div>
-                    <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center">
-                      Read More <ArrowRight className="w-4 h-4 ml-2" />
+                    <button className="text-[#0D4C3A] font-semibold hover:text-[#1A6A50] transition-colors flex items-center group">
+                      Read Full Analysis
+                      <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </div>
@@ -173,101 +172,97 @@ const Blog = () => {
 
         {/* Blog Posts Grid */}
         {posts.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">📝</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-2">No Blog Posts Available</h3>
-            <p className="text-gray-600">Check back later for our latest insights and analysis.</p>
+          <div className="text-center py-16">
+            <div className="text-gray-400 text-5xl mb-4">📊</div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">No Insights Available</h3>
+            <p className="text-gray-500">New research is published weekly. Check back soon.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((post, index) => (
-              <article key={post._id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={post.featuredImage} 
-                    alt={post.title} 
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
-                  />
-                  {post.isFeatured && (
-                    <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      Featured
-                    </div>
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  {/* Category and Meta */}
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(post.category)}`}>
-                      {post.category.replace('-', ' ').toUpperCase()}
-                    </span>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Eye className="w-4 h-4 mr-1" />
-                      {post.views || 0}
-                    </div>
+            {posts
+              .filter(post => !post.isFeatured)
+              .map((post) => (
+                <article 
+                  key={post._id} 
+                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={post.featuredImage} 
+                      alt={post.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+                    />
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">{post.title}</h3>
-                  
-                  {/* Excerpt */}
-                  <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-3">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${getCategoryColor(post.category)}`}>
+                        {post.category.replace(/-/g, ' ').toUpperCase()}
+                      </span>
+                      <div className="flex items-center text-xs text-gray-500">
+                        <Eye className="w-3.5 h-3.5 mr-1" />
+                        {post.views}
+                      </div>
+                    </div>
 
-                  {/* Tags */}
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="mb-4">
-                      <div className="flex flex-wrap gap-2">
-                        {post.tags.slice(0, 3).map((tag, tagIndex) => (
-                          <span key={tagIndex} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-700">
-                            <Tag className="w-3 h-3 mr-1" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 leading-tight">
+                      {post.title}
+                    </h3>
+                    
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                      {post.excerpt}
+                    </p>
+
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {post.tags.slice(0, 3).map((tag, i) => (
+                          <span 
+                            key={i} 
+                            className="inline-flex items-center text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md"
+                          >
+                            <Tag className="w-2.5 h-2.5 mr-1" />
                             {tag}
                           </span>
                         ))}
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Meta Info */}
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(post.publishedAt)}
+                    <div className="flex justify-between items-center text-xs text-gray-500 mb-4">
+                      <span>{formatDate(post.publishedAt)}</span>
+                      <span>{post.readTime} min read</span>
                     </div>
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {post.readTime} min read
-                    </div>
+
+                    <button 
+                      className="w-full py-2.5 text-sm font-medium text-[#0D4C3A] hover:text-[#1A6A50] border border-gray-200 rounded-lg hover:border-[#0D4C3A]/30 transition-colors"
+                    >
+                      Read Article
+                    </button>
                   </div>
-
-                  {/* CTA Button */}
-                  <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center">
-                    Read Article <ArrowRight className="w-4 h-4 ml-2" />
-                  </button>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))}
           </div>
         )}
 
-        {/* Newsletter CTA */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-            <h2 className="text-3xl font-bold mb-4">Stay Updated with Market Insights</h2>
-            <p className="text-xl mb-6 opacity-90">
-              Get the latest market analysis, trading tips, and investment strategies delivered to your inbox.
+        {/* Premium Newsletter CTA — Gold & Green Theme */}
+        <div className="mt-24 text-center">
+          <div className="bg-gradient-to-r from-[#0D4C3A] to-[#1A6A50] rounded-3xl p-10 text-white">
+            <h2 className="text-3xl font-bold mb-3">Join Our Research Circle</h2>
+            <p className="text-gray-200 max-w-2xl mx-auto mb-8 leading-relaxed">
+              Receive exclusive market briefings, deep-dive reports, and early access to investment theses—curated for discerning investors.
             </p>
             <div className="flex max-w-md mx-auto">
               <input 
                 type="email" 
-                placeholder="Enter your email address" 
-                className="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+                placeholder="your.email@domain.com" 
+                className="flex-1 px-5 py-3.5 rounded-l-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FFD700]"
               />
-              <button className="bg-white text-blue-600 px-6 py-3 rounded-r-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+              <button 
+                className="bg-[#FFD700] hover:bg-[#FFC400] text-[#0D4C3A] px-6 py-3.5 rounded-r-xl font-bold transition-colors whitespace-nowrap"
+              >
                 Subscribe
               </button>
             </div>
+            <p className="text-xs text-gray-300 mt-4">No spam. Unsubscribe anytime.</p>
           </div>
         </div>
       </div>
@@ -276,4 +271,3 @@ const Blog = () => {
 };
 
 export default Blog;
-

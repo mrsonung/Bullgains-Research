@@ -152,8 +152,7 @@ const Disclaimer = () => {
               </p>
               <p className="mt-4">
                 <strong>Email:</strong> support@bullgains.in<br />
-                <strong>Phone:</strong> +91 7903908955<br />
-                <strong>Address:</strong> No. 631, Brahmpur, Po-New Jaganpura, Ps-Ramkrishna Nagar, Patna, Bihar – 800027
+                <strong>Address:</strong> No. 631, Brahmpur, Po-New Jaganpura, Ps-Ramkrishna Nagar, Patna, Bihar  800027
               </p>
             </div>
           </section>

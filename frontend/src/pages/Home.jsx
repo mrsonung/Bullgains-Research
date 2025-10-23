@@ -6,15 +6,15 @@ import MarketOverview from '../components/MarketOverview';
 
 const Home = () => {
   const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
+    initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.6, ease: 'easeOut' }
   };
 
   const staggerChildren = {
     animate: {
       transition: {
-        staggerChildren: 0.2
+        staggerChildren: 0.15
       }
     }
   };
@@ -22,60 +22,59 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative text-white py-20 overflow-hidden">
+      <section className="relative text-white overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 z-0">
           <video
             autoPlay
             muted
             loop
+            playsInline
             className="w-full h-full object-cover"
           >
             <source src="/home.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
         </div>
-        
+
         {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-36">
           <motion.div
-            className="text-center"
+            className="text-center max-w-4xl mx-auto"
             initial="initial"
             animate="animate"
             variants={staggerChildren}
           >
             <motion.h1 
-              className="text-4xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg"
-              variants={fadeInUp}
-            >
-              Smart Research for Smarter Investment
-            </motion.h1>
+  className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight text-white drop-shadow-lg"
+  variants={fadeInUp}
+>
+  Smart Research for{' '}
+  <span className="text-yellow-400 drop-shadow-md">Smarter Investment</span>
+</motion.h1>
             <motion.p 
-              className="text-xl md:text-2xl mb-8 text-white drop-shadow-md max-w-4xl mx-auto"
+              className="text-lg md:text-xl lg:text-2xl mb-10 text-gray-200 max-w-3xl mx-auto leading-relaxed"
               variants={fadeInUp}
             >
-              In-depth market research and analysis to help you make more informed business decisions. 
-              We are dedicated to constantly bettering ourselves in terms of our research capabilities 
-              and strive to provide the best possible experience to all of our clients.
+              In-depth, SEBI-compliant market research and analysis to help you make confident, data-driven decisions.
             </motion.p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
               variants={fadeInUp}
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   to="/services"
-                  className="bg-yellow-500 text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors block shadow-lg"
+                  className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-blue-900 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
                 >
                   Explore Our Research
                 </Link>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   to="/contact"
-                  className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-800 transition-colors block shadow-lg"
+                  className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-blue-900 transition-all duration-300 shadow-lg"
                 >
                   Get In Touch
                 </Link>
@@ -85,166 +84,130 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Real-time Market Analytics Section */}
+      {/* Real-time Market Analytics */}
       <MarketOverview />
 
-      {/* Key Highlights Section */}
-      <section className="py-20 bg-white">
+      {/* Why Choose Us */}
+      <section className="py-24 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Bullgains Research?
+          <motion.div
+            className="text-center mb-20"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-5">
+              Why Choose <span className="text-blue-700">Bullgains Research</span>?
             </h2>
-            <p className="text-xl text-gray-600">
-              Professional market research backed by years of experience and SEBI compliance
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Professional, transparent, and SEBI-registered research backed by decades of market experience.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <div className="text-center bg-gray-50 p-8 rounded-lg">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">40+ Years</h3>
-              <p className="text-gray-600">Combined corporate experience</p>
-            </div>
-
-            <div className="text-center bg-gray-50 p-8 rounded-lg">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Committed</h3>
-              <p className="text-gray-600">To serving our customers</p>
-            </div>
-
-            <div className="text-center bg-gray-50 p-8 rounded-lg">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Target className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Regular Updates</h3>
-              <p className="text-gray-600">In a structured format</p>
-            </div>
-          </div>
-
-          {/* Services Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Research</h3>
-              <p className="text-gray-600">
-                All research views are backed by thorough analysis and data for consistent results.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BarChart3 className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Customer Focus</h3>
-              <p className="text-gray-600">
-                Commitment to meeting clients' financial objectives with personalized service.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Risk Management</h3>
-              <p className="text-gray-600">
-                Robust risk management plans to optimize client benefits and protect investments.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Vibrancy</h3>
-              <p className="text-gray-600">
-                Young and energetic team dedicated to delivering optimal results.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Company Information Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Company Information
-            </h2>
-            <p className="text-xl text-gray-600">
-              SEBI-registered Research Analyst providing authentic market research services
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="bg-white p-8 rounded-lg shadow-lg">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Management Team</h3>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <div>
-                    <p className="font-semibold text-gray-900">Diverse Experience</p>
-                    <p className="text-gray-600">Top management with diverse corporate and industrial experience</p>
-                  </div>
+          {/* Stats */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerChildren}
+          >
+            {[
+              { icon: Clock, value: '10+ Years', label: 'Combined corporate experience' },
+              { icon: Users, value: '1000+', label: 'Clients served nationwide' },
+              { icon: Target, value: 'Daily', label: 'Structured market updates' }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 text-center hover:shadow-xl transition-shadow"
+                variants={fadeInUp}
+              >
+                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-5">
+                  <item.icon className="w-8 h-8 text-blue-600" />
                 </div>
-              </div>
-            </div>
+                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{item.value}</h3>
+                <p className="text-gray-600">{item.label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
 
-            <div className="bg-white p-8 rounded-lg shadow-lg">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Registration Details</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                  <span className="font-medium text-gray-700">GSTIN:</span>
-                  <span className="text-gray-900">10ABEFB4164D1Z5</span>
+          {/* Services Grid */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerChildren}
+          >
+            {[
+              { icon: TrendingUp, title: 'Research', desc: 'All views backed by thorough analysis and real-time data.' },
+              { icon: BarChart3, title: 'Customer Focus', desc: 'Personalized strategies aligned with your financial goals.' },
+              { icon: Shield, title: 'Risk Management', desc: 'Protect your capital with disciplined risk frameworks.' },
+              { icon: Award, title: 'Vibrant Team', desc: 'Young, energetic experts delivering sharp insights.' }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                className="bg-white p-7 rounded-2xl shadow-md border border-gray-100 text-center hover:shadow-lg transition-all duration-300"
+                variants={fadeInUp}
+                whileHover={{ y: -8 }}
+              >
+                <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-5">
+                  <item.icon className="w-7 h-7 text-blue-600" />
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                  <span className="font-medium text-gray-700">Partnership Deed:</span>
-                  <span className="text-gray-900">05 Feb 2025</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                  <span className="font-medium text-gray-700">Website:</span>
-                  <span className="text-gray-900">www.bullgains.in</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="font-medium text-gray-700">Firm Type:</span>
-                  <span className="text-gray-900">Partnership Firm</span>
-                </div>
-              </div>
-            </div>
-          </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-blue-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section className="py-28 bg-gradient-to-r from-blue-900 to-blue-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 right-10 w-72 h-72 bg-yellow-400 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 left-10 w-96 h-96 bg-blue-400 rounded-full blur-3xl"></div>
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h2 
+            className="text-3xl md:text-5xl font-extrabold mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
             Ready to Make Informed Investment Decisions?
-          </h2>
-          <p className="text-xl mb-8 text-blue-100">
-            Join our clients who trust Bullgains Research for authentic market insights and professional guidance.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          </motion.h2>
+          <motion.p 
+            className="text-xl mb-10 text-blue-100 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            Join thousands of investors who trust Bullgains Research for authentic, actionable market intelligence.
+          </motion.p>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-5 justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
             <Link
-              to="/register"
-              className="bg-yellow-500 text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
+              to="/payment-details"
+              className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-blue-900 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 min-w-[220px]"
             >
               Get Started Today
             </Link>
             <Link
               to="/contact"
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-800 transition-colors"
+              className="bg-white/10 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-blue-900 transition-all duration-300 min-w-[220px]"
             >
               Contact Us
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

@@ -38,6 +38,7 @@ import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
 import PaymentDetails from './pages/PaymentDetails'
+import SearchResults from './pages/SearchResults'
 
 // Protected Route Component
 import ProtectedRoute from './components/ProtectedRoute'
@@ -80,6 +81,7 @@ function App() {
                   <Route path="/odr" element={<ODR />} />
                   <Route path="/odr-circular" element={<ODRCircular />} />
                   <Route path="/payment-details" element={<PaymentDetails />} />
+                  <Route path="/search" element={<SearchResults />} />
                   
                   {/* Protected Routes */}
                   <Route path="/dashboard" element={
