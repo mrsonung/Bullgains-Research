@@ -11,66 +11,65 @@ export const SocketProvider = ({ children }) => {
   const { isAuthenticated, token } = useAuth();
 
   useEffect(() => {
-    // Determine socket base URL: prefer VITE_SOCKET_URL; else derive from VITE_API_URL by stripping trailing /api
-    const apiUrl = import.meta.env.VITE_API_URL;
-    const derivedSocketUrl = apiUrl && apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
-    const socketUrl = import.meta.env.VITE_SOCKET_URL || derivedSocketUrl || 'https://bullgains-research.onrender.com';
+    // In development, use relative path so Vite proxy works
+    // In production, use absolute URL
+    let socketUrl = '/';
+    if (import.meta.env.PROD) {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const derivedSocketUrl = apiUrl && apiUrl.endsWith('/api') 
+        ? apiUrl.slice(0, -4) 
+        : apiUrl;
+      socketUrl = import.meta.env.VITE_SOCKET_URL || derivedSocketUrl || 'https://bullgains.in';
+    }
 
-    // Initialize socket connection
     const newSocket = io(socketUrl, {
-      auth: {
-        token: token
-      }
+      path: '/socket.io', // Explicitly set path to match Vite proxy
+      auth: { token },
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
     });
 
     newSocket.on('connect', () => {
-      console.log('Connected to server');
+      console.log('✅ Connected to Socket.IO server');
       setIsConnected(true);
     });
 
     newSocket.on('disconnect', () => {
-      console.log('Disconnected from server');
+      console.log('🔌 Disconnected from Socket.IO server');
       setIsConnected(false);
     });
 
     newSocket.on('connect_error', (error) => {
-      console.error('Connection error:', error);
+      console.error('❌ Socket connection error:', error.message);
       setIsConnected(false);
     });
 
-    // Listen for real-time market data
     newSocket.on('market-update', (data) => {
       setMarketData(data);
     });
 
-    // Listen for portfolio updates (for authenticated users)
     newSocket.on('portfolio-update', (data) => {
-      console.log('Portfolio update received:', data);
-      // Handle portfolio updates here
+      console.log('💼 Portfolio update received:', data);
     });
 
-    // Listen for research reports updates
     newSocket.on('research-update', (data) => {
-      console.log('Research update received:', data);
-      // Handle research updates here
+      console.log('📊 Research update received:', data);
     });
 
     setSocket(newSocket);
 
-    // Cleanup on unmount
     return () => {
       newSocket.close();
     };
   }, [token]);
 
-  // Emit events
   const emitEvent = (eventName, data) => {
     if (socket && isConnected) {
       socket.emit(eventName, data);
     }
   };
 
-  // Join specific rooms for real-time updates
   const joinRoom = (roomName) => {
     if (socket && isConnected) {
       socket.emit('join-room', roomName);
@@ -83,14 +82,12 @@ export const SocketProvider = ({ children }) => {
     }
   };
 
-  // Subscribe to market data
   const subscribeToMarket = () => {
     if (socket && isConnected) {
       socket.emit('subscribe-market');
     }
   };
 
-  // Unsubscribe from market data
   const unsubscribeFromMarket = () => {
     if (socket && isConnected) {
       socket.emit('unsubscribe-market');
@@ -105,7 +102,7 @@ export const SocketProvider = ({ children }) => {
     joinRoom,
     leaveRoom,
     subscribeToMarket,
-    unsubscribeFromMarket
+    unsubscribeFromMarket,
   };
 
   return (
@@ -122,4 +119,3 @@ export const useSocket = () => {
   }
   return context;
 };
-

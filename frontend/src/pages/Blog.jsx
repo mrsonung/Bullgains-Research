@@ -245,7 +245,7 @@ const Blog = () => {
 
         {/* Premium Newsletter CTA — Gold & Green Theme */}
         <div className="mt-24 text-center">
-          <div className="bg-gradient-to-r from-[#0D4C3A] to-[#1A6A50] rounded-3xl p-10 text-white">
+          {/* <div className="bg-gradient-to-r from-[#0D4C3A] to-[#1A6A50] rounded-3xl p-10 text-white">
             <h2 className="text-3xl font-bold mb-3">Join Our Research Circle</h2>
             <p className="text-gray-200 max-w-2xl mx-auto mb-8 leading-relaxed">
               Receive exclusive market briefings, deep-dive reports, and early access to investment theses—curated for discerning investors.
@@ -261,9 +261,9 @@ const Blog = () => {
               >
                 Subscribe
               </button>
-            </div>
-            <p className="text-xs text-gray-300 mt-4">No spam. Unsubscribe anytime.</p>
-          </div>
+            </div> */}
+            {/* <p className="text-xs text-gray-300 mt-4">No spam. Unsubscribe anytime.</p> */}
+          {/* </div> */}
         </div>
       </div>
     </div>

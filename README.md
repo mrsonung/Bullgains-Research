@@ -61,7 +61,7 @@ A complete, scalable, and visually compelling web application for **Bullgains Re
 ## 📁 Project Structure
 
 ```
-bullgains-research/
+bullgains/
 ├── frontend/                 # React frontend application
 │   ├── src/
 │   │   ├── components/      # Reusable UI components
@@ -101,7 +101,7 @@ Before running this application, make sure you have the following installed:
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd bullgains-research
+   cd bullgains
    ```
 
 2. **Install all dependencies**
@@ -121,7 +121,7 @@ Before running this application, make sure you have the following installed:
    Edit `server/.env` with your configuration:
    ```env
    # Database
-   MONGODB_URI=mongodb://localhost:27017/bullgains-research
+   MONGODB_URI=mongodb://localhost:27017/bullgains
    
    # JWT
    JWT_SECRET=your_super_secret_jwt_key_here

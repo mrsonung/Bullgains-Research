@@ -67,7 +67,7 @@ const Footer = () => {
                 <a href="https://www.instagram.com/bullgainsresearch" target="_blank" rel="noopener noreferrer" className="social-link">
                   <ExternalLink className="external-icon" /> Instagram
                 </a>
-                <a href="https://www.linkedin.com/in/bullgains-research-44588438a/" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="https://www.linkedin.com/in/bullgains-44588438a/" target="_blank" rel="noopener noreferrer" className="social-link">
                   <ExternalLink className="external-icon" /> LinkedIn
                 </a>
                 <a href="https://threads.com/bullgainsresearch" target="_blank" rel="noopener noreferrer" className="social-link">

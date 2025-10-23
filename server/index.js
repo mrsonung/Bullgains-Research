@@ -129,6 +129,7 @@ require('dotenv').config();
 const config = require('./config');
 const { connectDB } = require('./config/db');
 
+const path = require('path');
 const app = express();
 const server = createServer(app);
 
@@ -139,13 +140,17 @@ const PORT = process.env.PORT || config.PORT || 5000;
 const CLIENT_URL = (config.CLIENT_URL || '').replace(/\/$/, '');
 
 // ✅ Initialize Socket.IO with correct CORS
+// server.js
 const io = new Server(server, {
   cors: {
-    origin: CLIENT_URL,
+    origin: [
+      "http://localhost:5173",
+      "https://bullgains.in",
+      "https://www.bullgains.in"
+    ],
     methods: ["GET", "POST"],
-    credentials: true,
-  },
-  transports: ["websocket", "polling"],
+    credentials: true
+  }
 });
 
 // ✅ Rate limiting
@@ -171,6 +176,27 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // ✅ Connect MongoDB
 connectDB();
 
+// Add a permissive CORS header for our simple API routes (do this early so dev proxy and sockets work)
+app.use((req, res, next) => {
+  const allowed = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://bullgains.in',
+    'https://www.bullgains.in'
+  ];
+  const origin = req.headers.origin;
+  if (allowed.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
+
 // ✅ Define API routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
@@ -184,7 +210,11 @@ if (config.ENABLE_SEED === 'true') {
   app.use('/api/seed', require('./routes/seed'));
 }
 
-// ✅ Default route for Render health check
+// Mount quote proxy route (server-side Yahoo Finance proxy) to avoid CORS/401 errors
+const quoteRouter = require('./routes/quote');
+app.use('/api/quote', quoteRouter);
+
+// ✅ Default route for Render health check and static frontend
 app.use(express.static(path.join(__dirname, "frontend", "dist")));
 app.get('/', (_, res) => {
   res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));

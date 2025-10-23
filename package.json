@@ -1,5 +1,5 @@
 {
-  "name": "bullgains-research",
+  "name": "bullgains",
   "version": "1.0.0",
   "description": "SEBI-registered research-based trading company web application",
   "main": "index.js",

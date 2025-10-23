@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { RefreshCw } from 'lucide-react';
 import MarketCard from './MarketCard';
@@ -9,8 +9,11 @@ const MarketOverview = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const isFetchingRef = useRef(false);
   // Fetch market data
   const fetchData = useCallback(async () => {
+    if (isFetchingRef.current) return; // avoid overlapping fetches
+    isFetchingRef.current = true;
     try {
       setIsLoading(true);
       setError(null);
@@ -22,6 +25,7 @@ const MarketOverview = () => {
       setError(err.message || 'Failed to fetch market data');
     } finally {
       setIsLoading(false);
+      isFetchingRef.current = false;
     }
   }, []);
 
@@ -34,7 +38,7 @@ const MarketOverview = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchData();
-    }, 10000); // 10 seconds
+    }, 15000); // 15 seconds (reduce rate to avoid upstream rate limits)
 
     return () => clearInterval(interval);
   }, [fetchData]);
