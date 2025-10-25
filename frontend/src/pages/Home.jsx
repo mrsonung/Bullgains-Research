@@ -449,6 +449,10 @@ const Home = () => {
           <div className="copyright">
             <p>© {new Date().getFullYear()} Bullgains Research. All rights reserved.</p>
             <p>Disputes subject to Indian Arbitration and Conciliation Act, 1996.</p>
+            {/* add the adminpanel link here */}
+            <Link to="/admin" className="admin-panel-link">
+              Admin Panel
+            </Link>
           </div>
         </div>
       </footer>
