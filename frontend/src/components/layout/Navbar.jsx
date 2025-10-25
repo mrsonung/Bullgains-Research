@@ -23,9 +23,11 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
-    { name: 'Blog', path: '/blog' },
+    // { name: 'Blog', path: '/blog' },
     { name: 'Payment', path: '/payment-details' },
-    { name: 'Contact', path: '/contact' },
+    // { name: 'Contact', path: '/contact' },
+    { name: 'Customer Query', path: '/customer-query' }
+    // { name: 'adminPanel', path: '/admin' }
   ];
 
   return (

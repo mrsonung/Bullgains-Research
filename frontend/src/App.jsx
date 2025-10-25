@@ -34,11 +34,13 @@ import ODR from './pages/ODR'
 import ODRCircular from './pages/ODRCircular'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
+import AdminPanel from './pages/AdminPanel'
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
 import PaymentDetails from './pages/PaymentDetails'
 import SearchResults from './pages/SearchResults'
+import CustomerQuery from './pages/customerQuery'
 
 // Protected Route Component
 import ProtectedRoute from './components/ProtectedRoute'
@@ -60,6 +62,7 @@ function App() {
                   <Route path="/services" element={<Services />} />
                   <Route path="/services/:slug" element={<ServiceDetail />} />
                   <Route path="/compliance" element={<Compliance />} />
+                  <Route path="/customer-query" element={<CustomerQuery />} />
                   <Route path="/team" element={<Team />} />
                   <Route path="/infrastructure" element={<Infrastructure />} />
                   <Route path="/disclosures" element={<Disclosures />} />
@@ -69,6 +72,7 @@ function App() {
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
+                  <Route path="/admin" element={<AdminPanel />} />
                   {/* Policy & Compliance Pages */}
                   <Route path="/disclaimer" element={<Disclaimer />} />
                   <Route path="/disclosure" element={<Disclosure />} />
@@ -99,7 +103,7 @@ function App() {
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
-              <Footer />
+              {/* <Footer /> */}
             </div>
           </SocketProvider>
         </AuthProvider>

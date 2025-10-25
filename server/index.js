@@ -1,121 +1,3 @@
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const cors = require('cors');
-// const helmet = require('helmet');
-// const compression = require('compression');
-// const morgan = require('morgan');
-// const rateLimit = require('express-rate-limit');
-// const { createServer } = require('http');
-// const { Server } = require('socket.io');
-// require('dotenv').config();
-// const config = require('./config');
-// const { connectDB } = require('./config/db');
-
-// const app = express();
-// const port = process.env.PORT || 5000;
-// const server = createServer(app);
-// const io = new Server(server, {
-//   cors: {
-//     origin: config.CLIENT_URL,
-//     methods: ["GET", "POST"],
-//     credentials: true
-//   },
-//   transports: ["websocket", "polling"],
-// });
-
-// // Rate limiting
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000, // 15 minutes
-//   max: 100 // limit each IP to 100 requests per windowMs
-// });
-
-// // Middleware
-// app.use(helmet());
-// app.use(compression());
-// app.use(morgan('combined'));
-// app.use(limiter);
-// app.use(cors({
-//   origin: config.CLIENT_URL,
-//   credentials: true
-// }));
-// app.use(express.json({ limit: '10mb' }));
-// app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// // MongoDB connection
-// connectDB();
-
-// // Routes
-// app.use('/api/auth', require('./routes/auth'));
-// app.use('/api/users', require('./routes/users'));
-// app.use('/api/blog', require('./routes/blog'));
-// app.use('/api/services', require('./routes/services'));
-// app.use('/api/contact', require('./routes/contact'));
-// app.use('/api/analytics', require('./routes/analytics'));
-// // Seed routes (protect in production)
-// if (config.ENABLE_SEED === 'true') {
-//   app.use('/api/seed', require('./routes/seed'));
-// }
-
-// // Socket.io for real-time analytics
-// io.on('connection', (socket) => {
-//   console.log('📊 Client connected for real-time analytics');
-  
-//   socket.on('disconnect', () => {
-//     console.log('📊 Client disconnected from analytics');
-//   });
-// });
-
-// // Make io available to routes
-// app.set('io', io);
-
-// // Health check endpoint
-// app.get('/api/health', (req, res) => {
-//   res.json({ 
-//     status: 'OK', 
-//     timestamp: new Date().toISOString(),
-//     uptime: process.uptime()
-//   });
-// });
-
-// // Error handling middleware
-// app.use((err, req, res, next) => {
-//   console.error(err.stack);
-//   res.status(500).json({ 
-//     message: 'Something went wrong!',
-//     error: config.NODE_ENV === 'development' ? err.message : {}
-//   });
-// });
-
-// // 404 handler
-// app.use('*', (req, res) => {
-//   res.status(404).json({ message: 'Route not found' });
-// });
-
-// const PORT = config.PORT;
-
-// // Handle server startup with proper error handling
-// const startServer = () => {
-//   server.listen(PORT, () => {
-//     console.log(`🚀 Server running on port ${PORT}`);
-//     console.log(`📊 Real-time analytics available via Socket.IO`);
-//   });
-
-//   server.on('error', (err) => {
-//     if (err.code === 'EADDRINUSE') {
-//       console.error(`❌ Port ${PORT} is already in use. Please kill the process using this port or use a different port.`);
-//       console.error('💡 You can kill all Node.js processes with: taskkill /f /im node.exe');
-//       process.exit(1);
-//     } else {
-//       console.error('❌ Server error:', err);
-//       process.exit(1);
-//     }
-//   });
-// };
-
-// // Start the server
-// startServer();
-
-// module.exports = { app, io };
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -133,21 +15,22 @@ const path = require('path');
 const app = express();
 const server = createServer(app);
 
-// ✅ Use Render’s assigned port
+// ✅ Use Render's assigned port
 const PORT = process.env.PORT || config.PORT || 5000;
 
-// ✅ Make sure CLIENT_URL has no trailing slash
-const CLIENT_URL = (config.CLIENT_URL || '').replace(/\/$/, '');
+// ✅ Define allowed origins
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'https://bullgains.in',
+  'https://www.bullgains.in',
+  'https://bullgains.vercel.app'
+];
 
 // ✅ Initialize Socket.IO with correct CORS
-// server.js
 const io = new Server(server, {
   cors: {
-    origin: [
-      "http://localhost:5173",
-      "https://bullgains.in",
-      "https://www.bullgains.in"
-    ],
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -159,43 +42,51 @@ const limiter = rateLimit({
   max: 100,
 });
 
-// ✅ Middleware setup
-app.use(helmet());
+// ✅ Specific rate limit for query form (prevent spam)
+const queryLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5, // 5 queries per hour per IP
+  message: {
+    success: false,
+    message: 'Too many queries submitted. Please try again later.'
+  }
+});
+
+// ✅ CORS Middleware - MUST BE BEFORE OTHER MIDDLEWARE
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// ✅ Other Middleware
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(compression());
 app.use(morgan('combined'));
-app.use(limiter);
-app.use(
-  cors({
-    origin: CLIENT_URL,
-    credentials: true,
-  })
-);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+
+// ✅ Apply general rate limiter
+app.use(limiter);
 
 // ✅ Connect MongoDB
 connectDB();
 
-// Add a permissive CORS header for our simple API routes (do this early so dev proxy and sockets work)
-app.use((req, res, next) => {
-  const allowed = [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-    'https://bullgains.in',
-    'https://www.bullgains.in'
-  ];
-  const origin = req.headers.origin;
-  if (allowed.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  } else {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  if (req.method === 'OPTIONS') return res.sendStatus(204);
-  next();
-});
+// ✅ OPTIONS preflight handler for all routes
+app.options('*', cors());
 
 // ✅ Define API routes
 app.use('/api/auth', require('./routes/auth'));
@@ -204,23 +95,28 @@ app.use('/api/blog', require('./routes/blog'));
 app.use('/api/services', require('./routes/services'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/analytics', require('./routes/analytics'));
+app.use('/api/admin', require('./routes/admin'));
+
+
+// ✅ Customer Query Routes with rate limiting
+app.use('/api/query', queryLimiter, require('./routes/queryRoutes'));
 
 // Optional: only include seed in development or with ENABLE_SEED=true
 if (config.ENABLE_SEED === 'true') {
   app.use('/api/seed', require('./routes/seed'));
 }
 
-// Mount quote proxy route (server-side Yahoo Finance proxy) to avoid CORS/401 errors
+// Mount quote proxy route
 const quoteRouter = require('./routes/quote');
 app.use('/api/quote', quoteRouter);
 
-// ✅ Default route for Render health check and static frontend
+// ✅ Default route for static frontend
 app.use(express.static(path.join(__dirname, "frontend", "dist")));
 app.get('/', (_, res) => {
   res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
 });
 
-// ✅ Socket.IO setup for real-time analytics
+// ✅ Socket.IO setup
 io.on('connection', (socket) => {
   console.log('📊 Client connected to analytics:', socket.id);
 
@@ -229,7 +125,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// ✅ Make io available to routes if needed
+// ✅ Make io available to routes
 app.set('io', io);
 
 // ✅ Health check endpoint
@@ -238,29 +134,35 @@ app.get('/api/health', (req, res) => {
     status: 'OK',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
+    mongodb: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'
   });
 });
 
 // ✅ Error handling
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Error:', err.message);
   res.status(500).json({
+    success: false,
     message: 'Something went wrong!',
-    error: config.NODE_ENV === 'development' ? err.message : {},
+    error: config.NODE_ENV === 'development' ? err.message : {}
   });
 });
 
 // ✅ 404 route handler
 app.use('*', (req, res) => {
-  res.status(404).json({ message: 'Route not found' });
+  res.status(404).json({ 
+    success: false,
+    message: 'Route not found' 
+  });
 });
 
-// ✅ Start server with error handling
+// ✅ Start server
 const startServer = () => {
   server.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`🌐 Allowed origin: ${CLIENT_URL}`);
+    console.log(`🌐 Allowed origins:`, allowedOrigins.join(', '));
     console.log(`📊 Real-time analytics via Socket.IO ready`);
+    console.log(`📝 Customer Query API: /api/query`);
   });
 
   server.on('error', (err) => {
@@ -273,6 +175,18 @@ const startServer = () => {
     }
   });
 };
+
+// ✅ Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM received, closing server gracefully...');
+  server.close(() => {
+    console.log('✅ Server closed');
+    mongoose.connection.close(false, () => {
+      console.log('✅ MongoDB connection closed');
+      process.exit(0);
+    });
+  });
+});
 
 // ✅ Start the backend
 startServer();
