@@ -360,8 +360,10 @@ const allowedOrigins = [
   'http://127.0.0.1:5173',
   'https://bullgains.in',
   'https://www.bullgains.in',
-  'https://bullgains.vercel.app'
+  'https://bullgains.vercel.app',
+  'https://bullgains-backend.vercel.app',
 ];
+
 
 // CORS
 app.use(cors({
@@ -609,14 +611,10 @@ app.use((err, req, res, next) => {
 });
 
 // ============ SERVER (LOCAL ONLY) ============
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📝 Query API: /api/query`);
-    console.log(`👤 Admin API: /api/admin`);
-    console.log(`📈 Quote API: /api/quote`);
-  });
-}
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
+
 
 module.exports = app;
