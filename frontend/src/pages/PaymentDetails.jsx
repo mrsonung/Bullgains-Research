@@ -177,7 +177,7 @@ const PaymentDetails = () => {
                 </div>
                 <div className="flex flex-wrap gap-x-4 gap-y-2">
                   <span className="font-semibold text-gray-900 min-w-[120px]">Account Type:</span>
-                  <span>Regular Account</span>
+                  <span>Current Account</span>
                 </div>
               </div>
             </div>
