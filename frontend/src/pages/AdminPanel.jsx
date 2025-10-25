@@ -14,6 +14,9 @@ const AdminPanel = () => {
   const [error, setError] = useState('');
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  // AdminPanel.jsx and other components
+// const API_URL = import.meta.env.VITE_API_URL || 'https://bullgains-backend.vercel.app';
+
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
