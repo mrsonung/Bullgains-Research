@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { io } from 'socket.io-client';
+// Socket.IO disabled for serverless deployment
+// import io from 'socket.io-client';
 
 // Base API URL from Vite env
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://bullgains-backend.vercel.app';
 
 // Axios instance
 const api = axios.create({
@@ -11,7 +12,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Important for cookies or auth headers
+  withCredentials: true,
 });
 
 // Request interceptor to add JWT token if exists
@@ -32,74 +33,83 @@ api.interceptors.response.use(
       localStorage.removeItem('token');
       window.location.href = '/login';
     }
-    if (!error.response) console.error('Network error:', error.message);
+    if (!error.response) {
+      console.error('Network error:', error.message);
+    }
     return Promise.reject(error);
   }
 );
 
 // --- AUTH API ---
 export const authAPI = {
-  login: (credentials) => api.post('/auth/login', credentials),
-  register: (data) => api.post('/auth/register', data),
-  getMe: () => api.get('/auth/me'),
-  updateProfile: (data) => api.put('/users/profile', data),
-  changePassword: (data) => api.put('/users/change-password', data),
+  login: (credentials) => api.post('/api/auth/login', credentials),
+  register: (data) => api.post('/api/auth/register', data),
+  getMe: () => api.get('/api/auth/me'),
+  updateProfile: (data) => api.put('/api/users/profile', data),
+  changePassword: (data) => api.put('/api/users/change-password', data),
 };
 
 // --- BLOG API ---
 export const blogAPI = {
-  getBlogs: () => api.get('/blog'),
-  getBlog: (slug) => api.get(`/blog/${slug}`),
-  createBlog: (data) => api.post('/blog', data),
-  updateBlog: (id, data) => api.put(`/blog/${id}`, data),
-  deleteBlog: (id) => api.delete(`/blog/${id}`),
+  getBlogs: () => api.get('/api/blog'),
+  getBlog: (slug) => api.get(`/api/blog/${slug}`),
+  createBlog: (data) => api.post('/api/blog', data),
+  updateBlog: (id, data) => api.put(`/api/blog/${id}`, data),
+  deleteBlog: (id) => api.delete(`/api/blog/${id}`),
 };
 
 // --- SERVICES API ---
 export const servicesAPI = {
-  getServices: () => api.get('/services'),
-  getService: (slug) => api.get(`/services/${slug}`),
-  createService: (data) => api.post('/services', data),
-  updateService: (id, data) => api.put(`/services/${id}`, data),
-  deleteService: (id) => api.delete(`/services/${id}`),
+  getServices: () => api.get('/api/services'),
+  getService: (slug) => api.get(`/api/services/${slug}`),
+  createService: (data) => api.post('/api/services', data),
+  updateService: (id, data) => api.put(`/api/services/${id}`, data),
+  deleteService: (id) => api.delete(`/api/services/${id}`),
 };
 
 // --- ANALYTICS API ---
 export const analyticsAPI = {
-  getMarketOverview: () => api.get('/analytics/market-overview'),
-  getTopStocks: (params) => api.get('/analytics/top-stocks', { params }),
-  getSectorPerformance: () => api.get('/analytics/sector-performance'),
-  getMarketSentiment: () => api.get('/analytics/market-sentiment'),
-  getEconomicIndicators: () => api.get('/analytics/economic-indicators'),
-  getPortfolioPerformance: () => api.get('/analytics/portfolio-performance'),
-  getResearchReports: () => api.get('/analytics/research-reports'),
+  getMarketOverview: () => api.get('/api/analytics/market-overview'),
+  getTopStocks: (params) => api.get('/api/analytics/top-stocks', { params }),
+  getSectorPerformance: () => api.get('/api/analytics/sector-performance'),
+  getMarketSentiment: () => api.get('/api/analytics/market-sentiment'),
+  getEconomicIndicators: () => api.get('/api/analytics/economic-indicators'),
+  getPortfolioPerformance: () => api.get('/api/analytics/portfolio-performance'),
+  getResearchReports: () => api.get('/api/analytics/research-reports'),
 };
 
 // --- CONTACT API ---
 export const contactAPI = {
-  submitContact: (data) => api.post('/contact', data),
-  getContacts: () => api.get('/contact'),
-  updateContact: (id, data) => api.put(`/contact/${id}`, data),
-  deleteContact: (id) => api.delete(`/contact/${id}`),
+  submitContact: (data) => api.post('/api/contact', data),
+  getContacts: () => api.get('/api/contact'),
+  updateContact: (id, data) => api.put(`/api/contact/${id}`, data),
+  deleteContact: (id) => api.delete(`/api/contact/${id}`),
+};
+
+// --- QUOTE API ---
+export const quoteAPI = {
+  getQuote: (symbols) => api.get(`/api/quote?symbols=${symbols}`),
 };
 
 // --- HEALTH CHECK ---
-export const healthCheck = () => api.get('/health');
+export const healthCheck = () => api.get('/api/health');
 
-// --- SOCKET.IO SETUP ---
-export const socket = io(API_BASE_URL.replace('/api', ''), {
-  transports: ['websocket', 'polling'],
-  withCredentials: true, // Important to send cookies if backend uses them
-});
+// --- SOCKET.IO DISABLED FOR SERVERLESS ---
+// Socket.IO doesn't work with Vercel serverless functions
+// If you need real-time features, consider using polling or webhooks instead
 
-socket.on('connect', () => {
-  console.log('📊 Connected to backend Socket.IO:', socket.id);
-});
+export const socket = null; // Disabled
 
-socket.on('disconnect', () => {
-  console.log('📊 Disconnected from backend Socket.IO');
-});
+// Mock socket for components that expect it
+export const mockSocket = {
+  on: () => {},
+  off: () => {},
+  emit: () => {},
+  connected: false,
+};
+
+console.log('ℹ️ Socket.IO disabled (serverless deployment)');
+console.log('📡 API Base URL:', API_BASE_URL);
 
 export { api };
 export default api;
-
