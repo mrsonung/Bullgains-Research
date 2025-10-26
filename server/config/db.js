@@ -56,12 +56,8 @@ const mongoose = require('mongoose');
 let cachedConnection = null;
 
 async function connectDB() {
-  // Use either MONGO_URI or MONGODB_URI for flexibility
-  const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
-
-  if (!uri) {
-    throw new Error('❌ MongoDB URI not found in environment variables');
-  }
+  const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
+  if (!uri) throw new Error('❌ MongoDB URI not found in environment variables');
 
   // Use cached connection if available
   if (cachedConnection && mongoose.connection.readyState === 1) {
@@ -71,17 +67,9 @@ async function connectDB() {
 
   try {
     console.log('🗄️ Connecting to MongoDB...');
-
-    const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-      maxPoolSize: 10,
-      minPoolSize: 2,
-      bufferCommands: false,
-    });
-
+    const conn = await mongoose.connect(uri); // modern driver options are default
     cachedConnection = conn;
-    console.log(`✅ MongoDB connected to host: ${conn.connection.host}`);
+    console.log(`✅ MongoDB connected: ${conn.connection.host}`);
 
     mongoose.connection.on('disconnected', () => {
       console.warn('⚠️ MongoDB disconnected');
