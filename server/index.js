@@ -10,6 +10,7 @@ require('dotenv').config();
 const { connectDB } = require('./config/db');
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Connect MongoDB
 connectDB().catch(err => console.error('❌ MongoDB connection failed:', err.message));
