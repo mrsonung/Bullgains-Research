@@ -71,7 +71,7 @@ const Home = () => {
               </motion.div>
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
                 <Link
-                  to="/contact"
+                  to="/customer-query"
                   className="block w-full sm:w-auto text-center bg-transparent border-2 border-white text-white px-6 py-3.5 rounded-xl font-bold text-base sm:text-lg hover:bg-white hover:text-[#0D4C3A] transition-all duration-300"
                 >
                   Get In Touch
@@ -84,7 +84,7 @@ const Home = () => {
       </section>
 
       {/* Real-time Market Analytics */}
-      <MarketOverview />
+      {/* <MarketOverview /> */}
 
       {/* Why Choose Us */}
       <section className="py-20 md:py-28 bg-gradient-to-b from-white to-gray-50">
@@ -449,9 +449,9 @@ const Home = () => {
           <div className="copyright">
             <p>© {new Date().getFullYear()} Bullgains Research. All rights reserved.</p>
             <p>Disputes subject to Indian Arbitration and Conciliation Act, 1996.</p>
-            {/* add the adminpanel link here */}
-            <Link to="/admin" className="admin-panel-link">
-              Admin Panel
+            {/* add the adminpanel link here and adjust it left corner of the homepage near by scrollbar  */}
+            <Link to="/admin" className="admin-panel-link" title="Admin Panel" textDecoration="none" text-align="right">
+               👨
             </Link>
           </div>
         </div>
