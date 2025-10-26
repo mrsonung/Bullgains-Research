@@ -1761,3 +1761,86 @@ body {
 .page-banner img {
   animation: shakeLoop 5s infinite ease-in-out;
 }
+
+/* === Page Banner Responsive Fix === */
+.page-banner {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  /* Keep any existing styles */
+}
+
+.page-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Overlay fix for responsiveness */
+.page-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5vw 4vw;
+  text-align: center;
+  /* fallback background if not present in markup */
+  background: rgba(0,0,0,0.45);
+}
+
+/* Responsive heading and text */
+.page-banner-overlay h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #ffeb3b;
+  line-height: 1.12;
+  margin-bottom: 0.6rem;
+  word-break: break-word;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.17);
+}
+
+.page-banner-overlay p {
+  font-size: 1.15rem;
+  color: #fafafa;
+  font-weight: 400;
+  line-height: 1.5;
+  text-shadow: 0 1px 5px #0004;
+  max-width: 94vw;
+  margin: 0 auto;
+}
+
+
+/* Mobile breakpoints: reduce font and fix overflow */
+@media (max-width: 600px) {
+  .page-banner {
+    border-radius: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .page-banner-overlay {
+    padding: 12vw 4vw 11vw 4vw;
+  }
+  .page-banner-overlay h1 {
+    font-size: 1.35rem;
+    margin-bottom: 0.35rem;
+  }
+  .page-banner-overlay p {
+    font-size: 0.95rem;
+    line-height: 1.35;
+    padding: 0 2vw;
+    max-width: 98vw;
+  }
+}
+
+/* Small tablets */
+@media (max-width: 800px) {
+  .page-banner-overlay h1 {
+    font-size: 1.45rem;
+  }
+  .page-banner-overlay p {
+    font-size: 1.025rem;
+  }
+}
+
