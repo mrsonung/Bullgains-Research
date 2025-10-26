@@ -41,6 +41,7 @@ import NotFound from './pages/NotFound'
 import PaymentDetails from './pages/PaymentDetails'
 import SearchResults from './pages/SearchResults'
 import CustomerQuery from './pages/customerQuery'
+import ComplaintBoard from './pages/ComplaintBoard'
 
 // Protected Route Component
 import ProtectedRoute from './components/ProtectedRoute'
@@ -73,6 +74,7 @@ function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/admin" element={<AdminPanel />} />
+                  <Route path="/complaint-board" element={<ComplaintBoard />} />
                   {/* Policy & Compliance Pages */}
                   <Route path="/disclaimer" element={<Disclaimer />} />
                   <Route path="/disclosure" element={<Disclosure />} />

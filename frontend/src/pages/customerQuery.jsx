@@ -307,3 +307,272 @@ const CustomerQuery = () => {
 };
 
 export default CustomerQuery;
+// import React, { useState } from "react";
+// import {
+//   Send,
+//   User,
+//   Mail,
+//   Phone,
+//   MessageSquare,
+//   CheckCircle,
+//   AlertCircle,
+// } from "lucide-react";
+// import { motion } from "framer-motion";
+
+// const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+// const CustomerQuery = () => {
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     email: "",
+//     phone: "",
+//     subject: "",
+//     message: "",
+//   });
+
+//   const [status, setStatus] = useState({ type: "", message: "" });
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (isSubmitting) return; // prevent multiple submits
+
+//     // Basic front-end validation
+//     if (
+//       !formData.name ||
+//       !formData.email ||
+//       !formData.phone ||
+//       !formData.subject ||
+//       !formData.message
+//     ) {
+//       setStatus({ type: "error", message: "Please fill in all required fields." });
+//       return;
+//     }
+
+//     if (!/^\d{10}$/.test(formData.phone)) {
+//       setStatus({
+//         type: "error",
+//         message: "Please enter a valid 10-digit phone number.",
+//       });
+//       return;
+//     }
+
+//     setIsSubmitting(true);
+//     setStatus({ type: "", message: "" });
+
+//     try {
+//       const response = await fetch(`${API_URL}/api/query`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(formData),
+//       });
+
+//       const data = await response.json();
+
+//       if (response.ok && data.success) {
+//         setStatus({
+//           type: "success",
+//           message: "Thank you for your query! We’ll contact you within 24 hours.",
+//         });
+//         setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+//       } else {
+//         setStatus({
+//           type: "error",
+//           message: data.message || "Submission failed due to validation error.",
+//         });
+//       }
+//     } catch (err) {
+//       setStatus({
+//         type: "error",
+//         message:
+//           err.message ||
+//           "Failed to submit your query. Please try again or email support@bullgains.in",
+//       });
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   return (
+//     <div className="page-section">
+//       {/* Banner */}
+//       <div className="page-banner">
+//         <img src="/3.png" alt="Customer Query Banner" />
+//         <div className="page-banner-overlay">
+//           <h1>Get in Touch with Us</h1>
+//           <p>Have questions or require assistance? Fill out the form below, and we’ll respond within 24 hours.</p>
+//         </div>
+//       </div>
+
+//       <motion.div
+//         className="bg-white rounded-2xl shadow-lg border border-gray-100 max-w-3xl mx-auto p-6 md:p-10"
+//         initial={{ opacity: 0, y: 30 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.5 }}
+//       >
+//         {status.message && (
+//           <div
+//             className={`mb-6 p-4 rounded-xl flex items-start gap-3 ${
+//               status.type === "success"
+//                 ? "bg-green-50 border border-green-200"
+//                 : "bg-red-50 border border-red-200"
+//             }`}
+//           >
+//             {status.type === "success" ? (
+//               <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
+//             ) : (
+//               <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0" />
+//             )}
+//             <p className={status.type === "success" ? "text-green-800" : "text-red-800"}>
+//               {status.message}
+//             </p>
+//           </div>
+//         )}
+
+//         <form onSubmit={handleSubmit} className="space-y-6">
+//           {/* Full Name */}
+//           <div>
+//             <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+//               Full Name <span className="text-red-500">*</span>
+//             </label>
+//             <div className="relative">
+//               <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+//               <input
+//                 id="name"
+//                 type="text"
+//                 name="name"
+//                 value={formData.name}
+//                 onChange={handleChange}
+//                 required
+//                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#0D4C3A] outline-none"
+//                 placeholder="Your full name"
+//               />
+//             </div>
+//           </div>
+
+//           {/* Email */}
+//           <div>
+//             <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+//               Email Address <span className="text-red-500">*</span>
+//             </label>
+//             <div className="relative">
+//               <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+//               <input
+//                 id="email"
+//                 type="email"
+//                 name="email"
+//                 value={formData.email}
+//                 onChange={handleChange}
+//                 required
+//                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#0D4C3A]"
+//                 placeholder="you@example.com"
+//               />
+//             </div>
+//           </div>
+
+//           {/* Phone */}
+//           <div>
+//             <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+//               Phone Number <span className="text-red-500">*</span>
+//             </label>
+//             <div className="relative">
+//               <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+//               <input
+//                 id="phone"
+//                 type="tel"
+//                 name="phone"
+//                 value={formData.phone}
+//                 onChange={handleChange}
+//                 required
+//                 pattern="[0-9]{10}"
+//                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#0D4C3A]"
+//                 placeholder="10-digit mobile number"
+//               />
+//             </div>
+//             <p className="mt-1 text-xs text-gray-500">Please enter a valid 10-digit Indian mobile number</p>
+//           </div>
+
+//           {/* Subject */}
+//           <div>
+//             <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+//               Subject <span className="text-red-500">*</span>
+//             </label>
+//             <select
+//               id="subject"
+//               name="subject"
+//               value={formData.subject}
+//               onChange={handleChange}
+//               required
+//               className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-[#0D4C3A]"
+//             >
+//               <option value="">Select a topic</option>
+//               <option value="research">Research Inquiry</option>
+//               <option value="subscription">Subscription Plans</option>
+//               <option value="support">Technical Support</option>
+//               <option value="feedback">Feedback & Suggestions</option>
+//               <option value="other">Other</option>
+//             </select>
+//           </div>
+
+//           {/* Message */}
+//           <div>
+//             <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+//               Your Message <span className="text-red-500">*</span>
+//             </label>
+//             <div className="relative">
+//               <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
+//               <textarea
+//                 id="message"
+//                 name="message"
+//                 value={formData.message}
+//                 onChange={handleChange}
+//                 required
+//                 rows="6"
+//                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl resize-none focus:ring-2 focus:ring-[#0D4C3A]"
+//                 placeholder="Enter your message..."
+//               />
+//             </div>
+//           </div>
+
+//           {/* Submit Button */}
+//           <motion.button
+//             type="submit"
+//             disabled={isSubmitting}
+//             className={`w-full bg-gradient-to-r from-[#0D4C3A] to-[#1A6A50] text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg ${
+//               isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:scale-[1.02]"
+//             } transition-all duration-300`}
+//           >
+//             {isSubmitting ? (
+//               <>
+//                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+//                 Sending...
+//               </>
+//             ) : (
+//               <>
+//                 <Send className="w-5 h-5" /> Submit Query
+//               </>
+//             )}
+//           </motion.button>
+//         </form>
+
+//         {/* Footer Note */}
+//         <div className="mt-8 border-t border-gray-200 pt-4 text-center">
+//           <p className="text-sm text-gray-600">
+//             You can also email us directly at{" "}
+//             <a href="mailto:support@bullgains.in" className="text-[#0D4C3A] font-semibold hover:underline">
+//               support@bullgains.in
+//             </a>
+//           </p>
+//         </div>
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// export default CustomerQuery;

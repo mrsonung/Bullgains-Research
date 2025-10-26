@@ -312,7 +312,7 @@ const Home = () => {
                     </p>
                     <p style={{ 
                       fontWeight: '700', 
-                      color: '#0D4C3A', 
+                      color: '#fff700', 
                       fontSize: '1.1rem',
                       fontFamily: 'monospace',
                       letterSpacing: '0.5px'
@@ -335,7 +335,7 @@ const Home = () => {
                     </p>
                     <p style={{ 
                       fontWeight: '700', 
-                      color: '#0D4C3A', 
+                      color: '#fff700', 
                       fontSize: '1.1rem',
                       fontFamily: 'monospace',
                       letterSpacing: '0.5px'
@@ -362,14 +362,14 @@ const Home = () => {
                       rel="noopener noreferrer"
                       style={{ 
                         fontWeight: '700', 
-                        color: '#0D4C3A', 
+                        color: '#fff700', 
                         fontSize: '1.1rem',
                         textDecoration: 'none',
                         borderBottom: '1px dashed #0D4C3A',
                         transition: 'all 0.2s ease'
                       }}
                       onMouseEnter={(e) => e.target.style.color = '#1A6A50'}
-                      onMouseLeave={(e) => e.target.style.color = '#0D4C3A'}
+                      onMouseLeave={(e) => e.target.style.color = '#fff700'}
                     >
                       www.bullgains.in
                     </a>
@@ -450,9 +450,10 @@ const Home = () => {
             <p>© {new Date().getFullYear()} Bullgains Research. All rights reserved.</p>
             <p>Disputes subject to Indian Arbitration and Conciliation Act, 1996.</p>
             {/* add the adminpanel link here and adjust it left corner of the homepage near by scrollbar  */}
-            <Link to="/admin" className="admin-panel-link" title="Admin Panel" textDecoration="none" text-align="right">
-               👨
+            <Link to="/admin" className="admin-panel-link"  textDecoration="none" text-align="right">
+              👨
             </Link>
+            
           </div>
         </div>
       </footer>

@@ -32,6 +32,9 @@ if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Add Complaint Stats routes for monthly complaint board updates
+app.use('/api/complaints', require('./routes/complaints'));
+
 // Rate limiting
 const apiLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 const queryLimiter = rateLimit({
@@ -199,7 +202,10 @@ app.get('/', (req, res) => {
 
 // ============ ERROR HANDLERS ============
 app.use((req, res) => res.status(404).json({ success: false, message: 'Route not found', path: req.originalUrl }));
-app.use((err, req, res, next) => { console.error('❌ Error:', err.message); res.status(err.status || 500).json({ success: false, message: err.message || 'Something went wrong!' }); });
+app.use((err, req, res, next) => {
+  console.error('❌ Error:', err.message);
+  res.status(err.status || 500).json({ success: false, message: err.message || 'Something went wrong!' });
+});
 
 // ============ START SERVER ============
 async function startServer() {
@@ -210,6 +216,7 @@ async function startServer() {
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   } catch (err) {
     console.error('❌ Server failed to start:', err.message);
+    process.exit(1);
   }
 }
 

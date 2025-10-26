@@ -1,33 +1,36 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search } from 'lucide-react';
+import { Menu, X /*, Search */ } from 'lucide-react'; // Comment Search import
 import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  // const [searchQuery, setSearchQuery] = useState(''); // Comment search state
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
 
+  // Comment search handler
+  /*
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Navigate to the search page with query
       window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
       setSearchQuery('');
     }
   };
+  */
 
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
     // { name: 'Blog', path: '/blog' },
-    { name: 'Payment', path: '/payment-details' },
+    { name: 'Pricing', path: '/payment-details' },
     // { name: 'Contact', path: '/contact' },
+    { name: 'Complaint Board', path: '/complaint-board' },  // <-- new menu item added here
     { name: 'Customer Query', path: '/customer-query' }
-    // { name: 'adminPanel', path: '/admin' }
+    
   ];
 
   return (
@@ -61,7 +64,8 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Search Bar */}
+          {/* Search Bar - Commented out */}
+          {/*
           <div className="hidden md:flex items-center">
             <form onSubmit={handleSearch} className="relative">
               <div className="relative">
@@ -76,7 +80,7 @@ const Navbar = () => {
               </div>
             </form>
           </div>
-
+          */}
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -93,7 +97,8 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
-              {/* Mobile Search Bar */}
+              {/* Mobile Search Bar - Commented out */}
+              {/*
               <div className="px-3 py-2">
                 <form onSubmit={handleSearch} className="relative">
                   <div className="relative">
@@ -108,7 +113,8 @@ const Navbar = () => {
                   </div>
                 </form>
               </div>
-              
+              */}
+
               {navItems.map((item) => (
                 <Link
                   key={item.name}
@@ -123,7 +129,6 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              
             </div>
           </div>
         )}
