@@ -204,18 +204,15 @@ app.use((err, req, res, next) => { console.error('❌ Error:', err.message); res
 // ============ START SERVER ============
 async function startServer() {
   try {
-    await connectDB();  // <-- wait until connected
+    await connectDB();
     console.log('✅ MongoDB connected');
-
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   } catch (err) {
     console.error('❌ Server failed to start:', err.message);
-    process.exit(1); // critical to not start if Mongo fails
   }
 }
+
 startServer();
 
 module.exports = app;

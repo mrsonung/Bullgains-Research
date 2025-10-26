@@ -6,6 +6,7 @@ async function connectDB() {
   const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
   if (!uri) throw new Error('❌ MongoDB URI not found in environment variables');
 
+  // Use cached connection if available
   if (cachedConnection && mongoose.connection.readyState === 1) {
     console.log('✅ Using cached MongoDB connection');
     return cachedConnection;
@@ -13,12 +14,7 @@ async function connectDB() {
 
   try {
     console.log('🗄️ Connecting to MongoDB...');
-    const conn = await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      bufferCommands: false,
-      serverSelectionTimeoutMS: 5000,
-    });
+    const conn = await mongoose.connect(uri); // modern driver options are default
     cachedConnection = conn;
     console.log(`✅ MongoDB connected: ${conn.connection.host}`);
 
