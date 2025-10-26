@@ -195,7 +195,7 @@ const Home = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             <Link
-              to="/payment-details"
+              to="/customer-query"
               className="bg-gradient-to-r from-[#FFD700] to-[#FFCB05] text-[#0D4C3A] px-7 py-3.5 rounded-xl font-bold text-lg shadow-md hover:shadow-lg transition-all duration-300 min-w-[200px]"
             >
               Get Started Today

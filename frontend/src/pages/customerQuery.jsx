@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Send, User, Mail, Phone, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const CustomerQuery = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -26,48 +28,46 @@ const CustomerQuery = () => {
     }));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  setStatus({ type: '', message: '' });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus({ type: '', message: '' });
 
-  try {
-    // Update this URL to your backend endpoint
-    const response = await fetch('http://localhost:5000/api/query', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    });
+    try {
+      const response = await fetch(`${API_URL}/api/query`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
+      if (data.success) {
+        setStatus({
+          type: 'success',
+          message: 'Thank you for your query! We will get back to you within 24 hours.'
+        });
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        throw new Error(data.message || 'Failed to submit');
+      }
+    } catch (error) {
       setStatus({
-        type: 'success',
-        message: 'Thank you for your query! We will get back to you within 24 hours.'
+        type: 'error',
+        message: error.message || 'Failed to submit your query. Please try again or email us directly at support@bullgains.in'
       });
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
-    } else {
-      throw new Error(data.message || 'Failed to submit');
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    setStatus({
-      type: 'error',
-      message: error.message || 'Failed to submit your query. Please try again or email us directly at support@bullgains.in'
-    });
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
+  };
 
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
