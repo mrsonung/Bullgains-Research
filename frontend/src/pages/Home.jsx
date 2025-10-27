@@ -8,7 +8,7 @@ const TawkToWidget = () => {
   useEffect(() => {
     const s1 = document.createElement("script");
     s1.async = true;
-    s1.src = "https://embed.tawk.to/68ff46a0108634194eef337d/1j8iinpes";
+    s1.src = "https://embed.tawk.to/68ffc36f8c81b21950b53a84/1j8jh6r94";
     s1.charset = "UTF-8";
     s1.setAttribute("crossorigin", "*");
     document.body.appendChild(s1);
