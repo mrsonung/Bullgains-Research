@@ -1917,7 +1917,7 @@ body {
     line-height: 1.1;
   }
 }
-<<<<<<< HEAD
+/* ===== Final Page Banner Styling with Bullgains Theme ===== */
 .page-banner {
   position: relative;
   width: 100%;
@@ -1997,5 +1997,5 @@ body {
   .page-banner-overlay h1 { font-size: 0.89rem; }
   .page-banner-overlay p { font-size: 0.71rem; }
 }
-=======
->>>>>>> 2b72c31e452ca9a317537c6a096aa71021d666a0
+
+
