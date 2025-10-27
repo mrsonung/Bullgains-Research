@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TrendingUp, BarChart3, Users, Award, Clock, Shield, Target, MapPin, Mail, ExternalLink, AlertTriangle, FileText, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import MarketOverview from '../components/MarketOverview';
+
+const TawkToWidget = () => {
+  useEffect(() => {
+    const s1 = document.createElement("script");
+    s1.async = true;
+    s1.src = "https://embed.tawk.to/68ff46a0108634194eef337d/1j8iinpes";
+    s1.charset = "UTF-8";
+    s1.setAttribute("crossorigin", "*");
+    document.body.appendChild(s1);
+    return () => {
+      document.body.removeChild(s1);
+    };
+  }, []);
+  return null;
+};
 
 const Home = () => {
   const fadeInUp = {
@@ -21,6 +36,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
+      <TawkToWidget />
       {/* Hero Section */}
       <section className="relative text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -36,7 +52,6 @@ const Home = () => {
           </video>
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
         </div>
-
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <motion.div
             className="text-center max-w-4xl mx-auto"
@@ -57,7 +72,7 @@ const Home = () => {
             >
               SEBI-registered, data-driven market analysis to empower your investment decisions with confidence.
             </motion.p>
-           <motion.div 
+            <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center px-4"
               variants={fadeInUp}
             >
@@ -78,7 +93,6 @@ const Home = () => {
                 </Link>
               </motion.div>
             </motion.div>
-
           </motion.div>
         </div>
       </section>
@@ -103,7 +117,6 @@ const Home = () => {
               SEBI-compliant, transparent, and backed by institutional-grade methodology.
             </p>
           </motion.div>
-
           {/* Stats */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16"
@@ -130,7 +143,6 @@ const Home = () => {
               </motion.div>
             ))}
           </motion.div>
-
           {/* Services Grid */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
@@ -368,8 +380,8 @@ const Home = () => {
                         borderBottom: '1px dashed #0D4C3A',
                         transition: 'all 0.2s ease'
                       }}
-                      onMouseEnter={(e) => e.target.style.color = '#1A6A50'}
-                      onMouseLeave={(e) => e.target.style.color = '#fff700'}
+                      onMouseEnter={e => e.target.style.color = '#1A6A50'}
+                      onMouseLeave={e => e.target.style.color = '#fff700'}
                     >
                       www.bullgains.in
                     </a>
@@ -449,11 +461,10 @@ const Home = () => {
           <div className="copyright">
             <p>© {new Date().getFullYear()} Bullgains Research. All rights reserved.</p>
             <p>Disputes subject to Indian Arbitration and Conciliation Act, 1996.</p>
-            {/* add the adminpanel link here and adjust it left corner of the homepage near by scrollbar  */}
-            <Link to="/admin" className="admin-panel-link"  textDecoration="none" text-align="right">
+            {/* add the adminpanel link here and adjust it left corner of the homepage near by scrollbar  */}
+            <Link to="/admin" className="admin-panel-link" style={{ textDecoration: "none", textAlign: "right" }}>
               👨
             </Link>
-            
           </div>
         </div>
       </footer>
