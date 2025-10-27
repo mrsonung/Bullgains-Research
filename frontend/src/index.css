@@ -1999,3 +1999,35 @@ body {
 }
 
 
+
+.admin-panel-link {
+  /* position: fixed; */
+  top: 32px;
+  bottom: 32px;
+  right: 32px;
+  /* background: linear-gradient(135deg, #7ED957, #FFD700); */
+  color: #0D4C3A;
+  /* font-size: 2rem; */
+  /* padding: 0.45rem 0.65rem; */
+  border-radius: 50%;
+  text-decoration: none;
+  /* box-shadow: 0 4px 12px rgba(255, 242, 0, 0.18); */
+  z-index: 1200;
+  transition: all 0.25s;
+}
+.admin-panel-link:hover {
+  transform: scale(1.1);
+}
+
+/* On small screens, center horizontally above Tawk.to */
+@media (max-width: 700px) {
+  .admin-panel-link {
+    left: 50%;
+    transform: translateX(-50%);
+    top: auto;
+    right: auto;
+    bottom: 88px; /* Set this higher than Tawk.to widget */
+    font-size: 2rem;
+    padding: 0.45rem 0.65rem;
+  }
+}
