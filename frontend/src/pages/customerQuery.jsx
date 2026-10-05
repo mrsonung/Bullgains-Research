@@ -288,6 +288,7 @@ const CustomerQuery = () => {
             <Phone className="w-8 h-8 text-[#0D4C3A] mx-auto mb-3" />
             <h3 className="font-bold text-gray-900 mb-1">Call Us</h3>
             <p className="text-sm text-gray-600">Mon-Fri, 9 AM - 6 PM IST</p>
+            <p className="text-sm text-gray-600">6207284349, 7091338360</p>
           </motion.div>
 
           <motion.div
