@@ -275,7 +275,7 @@ const Home = () => {
                 <Mail className="contact-icon" />
                 <div>
                   <p className="contact-label">Phone</p>
-                  <p className="contact-label">6207284349, 7091338360</p>
+                  <p className="contact-text">6207284349, 7091338360</p>
                   <p className="contact-label">Email</p>
                   <p className="contact-text">support@bullgains.in</p>
                 </div>
