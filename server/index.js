@@ -1,4 +1,6 @@
-// index.js
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -7,7 +9,9 @@ const compression = require('compression');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const jwt = require('jsonwebtoken');
+
 require('dotenv').config();
+
 const { connectDB } = require('./config/db');
 
 // Initialize app
